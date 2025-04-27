@@ -62,7 +62,7 @@
   
       <div class="filter-group">
         <button class="filter-button" @click="filterActivities">
-          {{ showCompleted ? 'tampilkan daftar tugas aktif' : 'tampilkan semua' }}
+          {{ showCompleted ? 'tampilkan daftar tugas aktif' : 'tampilkan semua daftar tugas' }}
         </button>
       </div>
   
