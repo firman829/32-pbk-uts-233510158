@@ -23,7 +23,7 @@
       <span class="activity-text" :class="{ 'text-completed': isCompleted }">
         {{ activity.text }}
       </span>
-      <button class="delete-button" @click="removeActivity">❌</button>
+      <button class="delete-button" @click="removeActivity">hapus</button>
     </div>
 </template>
   
