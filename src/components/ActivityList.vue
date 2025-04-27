@@ -1,51 +1,66 @@
 <script>
-  import ActivityItem from './ActivityItem.vue';
-  
-  export default {
-    components: {
-      ActivityItem,
+import ActivityItem from './ActivityItem.vue';
+
+export default {
+  components: {
+    ActivityItem,
+  },
+  data() {
+    return {
+      activities: [],
+      newActivityText: '',
+      showCompleted: true,
+    };
+  },
+  computed: {
+    filteredActivities() {
+      if (this.showCompleted) {
+        return this.activities;
+      } else {
+        return this.activities.filter(activity => !activity.completed);
+      }
     },
-    data() {
-      return {
-        activities: [],
-        newActivityText: '',
-        showCompleted: true,
-      };
+  },
+  methods: {
+    addActivity() {
+      if (this.newActivityText.trim()) {
+        this.activities.push({
+          id: Date.now(),
+          text: this.newActivityText,
+          completed: false,
+        });
+        this.newActivityText = '';
+        this.saveActivities();
+      }
     },
-    computed: {
-      filteredActivities() {
-        if (this.showCompleted) {
-          return this.activities;
-        } else {
-          return this.activities.filter(activity => !activity.completed);
-        }
-      },
+    removeActivity(id) {
+      this.activities = this.activities.filter(activity => activity.id !== id);
+      this.saveActivities();
     },
-    methods: {
-      addActivity() {
-        if (this.newActivityText.trim()) {
-          this.activities.push({
-            id: Date.now(),
-            text: this.newActivityText,
-            completed: false,
-          });
-          this.newActivityText = '';
-        }
-      },
-      removeActivity(id) {
-        this.activities = this.activities.filter(activity => activity.id !== id);
-      },
-      toggleComplete(id, completed) {
-        const activity = this.activities.find(activity => activity.id === id);
-        if (activity) {
-          activity.completed = completed;
-        }
-      },
-      filterActivities() {
-        this.showCompleted = !this.showCompleted;
-      },
+    toggleComplete(id, completed) {
+      const activity = this.activities.find(activity => activity.id === id);
+      if (activity) {
+        activity.completed = completed;
+        this.saveActivities();
+      }
     },
-  };
+    filterActivities() {
+      this.showCompleted = !this.showCompleted;
+    },
+    saveActivities() {
+      localStorage.setItem('activities', JSON.stringify(this.activities));
+    },
+    loadActivities() {
+      const savedActivities = localStorage.getItem('activities');
+      if (savedActivities) {
+        this.activities = JSON.parse(savedActivities);
+      }
+    },
+  },
+  mounted() {
+    this.loadActivities();
+  },
+};
 </script>
 
 <template>
