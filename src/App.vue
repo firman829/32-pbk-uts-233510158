@@ -11,7 +11,7 @@ export default {
 
 <template>
   <div id="app" class="app-container">
-    <h1>daftar tugas belajar mahasiswa 📚</h1>
+    <h1>daftar tugas pembelajar mahasiswa 📚</h1>
     <ActivityList />
   </div>
 </template>
